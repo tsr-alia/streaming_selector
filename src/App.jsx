@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
+import Navbar from "./components/Navbar";
 import Home from "./components/Home"; // Import Home from a separate file
-import Question from "./components/Question";
 import Quiz from "./components/Quiz";
 import Library from "./components/Library";
 import { BrowserRouter as Router, Routes, Route, Link, useLocation, useNavigate } from "react-router-dom";
@@ -19,7 +19,6 @@ function App() {
   };
   // Determine the current background based on the route, fallback to a default if none matches
   const currentBackground = backgrounds[location.pathname] || 'url(/images/curtains.png)';
-
 
   // const Home = () => {
   //   const [questions, setQuestions] = useState([]);
@@ -154,9 +153,10 @@ function App() {
       style={{ backgroundImage: currentBackground }}
     >
       {/* Overlay div with 75% opacity */}
-      <div className="absolute inset-0 bg-black opacity-75 z-0"></div>
-      <div className="relative z-10">
-        <nav>
+      <div className="absolute inset-0 bg-black opacity-50 z-0" ></div>
+      {/* Menu */}
+      <div className="flex flex-col relative z-10 min-h-screen">
+        {/* <nav className="bg-black bg-opacity-25">
           <li>
             <Link to="/">
               <h1>Streamning Selector</h1>
@@ -169,13 +169,16 @@ function App() {
           <li>
             <Link to="/quiz">Find My Movie</Link>
           </li>
-        </nav>
+        </nav> */}
+        <Navbar />
+       
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/movie_library" element={<Library />}></Route>
           <Route path="/quiz" element={<Quiz />}></Route>
           {/* <Route path="/quiz/:id" element={<Quiz />}></Route> */}
         </Routes>
+        
      </div>
     </div>
     </>

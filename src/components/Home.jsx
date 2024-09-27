@@ -23,7 +23,7 @@ const Home = () => {
   };
 
   return (
-    <div>
+    <div className="bg-red bg-opacity-50">
       <div className="home">
         <h1>Not sure what movie to stream tonight?</h1>
         <p>No need to scroll endlessly, let’s find out!</p>

@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import React, { useState, useEffect } from "react";
 
 const Question = ({ name, question, options, type, nextQuestion, backQuestion, previousAnswer, isFirstQuestion, isLastQuestion, isQuizPreview }) => {
@@ -28,7 +30,7 @@ const Question = ({ name, question, options, type, nextQuestion, backQuestion, p
   }, [selectedAnswer, type]);
 
   const handleInputChange = (e) => {
-    const { value, checked } = e.target;
+    const { value, checked, className } = e.target;
 
     if (type === 'radio') {
       setSelectedAnswer(value); // For radio, directly set the selected value
@@ -53,21 +55,24 @@ const Question = ({ name, question, options, type, nextQuestion, backQuestion, p
   }
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full text-center">
-      <h2 className="text-xl font-bold mb-4">{question}</h2>
-      <form>
+    <div className="p-2 sm:max-w-lg w-full text-center flex flex-start flex-col outerPadding">
+      <h3 className="moviePicker bg-black">{question}</h3>
+      <form className="moviePicker">
         {options.map((option, index) => (
           <label
             key={index}
             htmlFor={option.value}
-            className="flex items-center space-x-2"
+            className={`flex items-center justify-center space-x-2 text-center w-full 
+              ${selectedAnswer === option.value || selectedAnswer.includes(option.value) ? 'bg-red' : 'bg-black'}
+              `
+            }
           >
             <input
               id={option.value}
               type={type}
               value={option.value}
               onChange={handleInputChange}
-              className="form-checkbox text-indigo-600 h-4 w-4"
+              className="hidden"
               name={name}
               checked={
                 type === "radio"
@@ -79,23 +84,28 @@ const Question = ({ name, question, options, type, nextQuestion, backQuestion, p
           </label>
         ))}
       </form>
-      <div className="flex justify-between mt-4">
+      <div className="flex justify-start">
+         {/* Back Button */}
         {!isFirstQuestion && (
           <button
             onClick={handleBack}
-            className="bg-gray-400 text-white py-2 px-4 rounded"
+            className="back"
           >
-            Back
+          <FontAwesomeIcon icon={faArrowLeft} /> Back
           </button>
+       
         )}
+         </div>
         {/* Next Button */}
+        <div className="flex justify-end mt-4">
         {isAnswered && (
           <button
             onClick={handleSubmit}
-            className="bg-indigo-600 text-white py-2 px-4 rounded"
+            className={isLastQuestion ? 'last' : 'next'}
           >
             {isLastQuestion ? "Find my Movie" : isQuizPreview ? "Start the Quiz" : "Next"}
           </button>
+
         )}
       </div>
     </div>

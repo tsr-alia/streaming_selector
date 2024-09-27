@@ -15,7 +15,6 @@ const Quiz = () => {
       .then((data) => {
         setQuestions(data);
         // Set initial state based on route params (currentQuestionIndex and firstAnswer)
-        console.log(location.state);
         if (location.state) {
           const { currentQuestionIndex, firstAnswer } = location.state;
           setCurrentQuestionIndex(currentQuestionIndex);
@@ -56,8 +55,11 @@ const Quiz = () => {
   };
 
   return (
-    <div className="w-screen h-screen flex items-center justify-center bg-black bg-opacity-25">
-      {questions.length > 0 && (
+    <>
+    <h2>Find My Movie</h2>
+    <div className="flex-grow mx-auto
+    ">
+        {questions.length > 0 && (
         <Question
           key={currentQuestionIndex}  // Ensure the Question component re-renders on index change
           question={questions[currentQuestionIndex].question}
@@ -72,6 +74,7 @@ const Quiz = () => {
         />
       )}
     </div>
+    </>
   );
 };
 

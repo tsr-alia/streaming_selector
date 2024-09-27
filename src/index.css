@@ -1,3 +1,74 @@
 @tailwind base;
+/* all general elements */
 @tailwind components;
+/* more complex elements Buttons etc */
 @tailwind utilities;
+/* create my own utilities */
+
+@font-face {
+    font-family: 'montserrat';
+    src: url('/src/assets/fonts/montserrat/Montserrat-SemiBold.ttf') format('truetype');
+    font-weight: 400; /* Specify the font weight */
+    font-style: normal; /* Specify the font style */
+  }
+
+  @font-face {
+    font-family: 'lovelo-line';
+    src: url('/src/assets/fonts/lovelo/Lovelo-LineBold.ttf') format('truetype');
+    font-weight: 400; /* Specify the font weight */
+    font-style: normal; /* Specify the font style */
+  }
+
+
+  @layer base {
+    h1 {
+        @apply font-loveloline text-white text-2xl;
+        /* color: theme("colors.white"); */
+    }
+
+    h2 {
+        @apply font-loveloline text-red md:text-6xl text-4xl outerPadding relative;
+        /* color: theme("colors.white"); */
+    }
+
+    h3, ul, li, a, p, input, button, span {
+        @apply font-montserrat;
+    }
+
+    h3 {
+        @apply text-lg font-semibold mb-4;
+    }
+  }
+
+  @layer components {
+    h3.moviePicker, form.moviePicker label {
+        @apply py-4 px-8 bg-opacity-50 text-white border-white border-2 rounded-xl mb-4;
+    }
+
+    form.moviePicker label {
+        @apply my-2;
+    }
+
+    button.next {
+        @apply px-4 py-2 rounded-xl bg-red text-white hover:bg-black hover:bg-opacity-50 border-white border-2 transition duration-300;
+    }
+
+    button.last {
+        @apply px-4 py-2 rounded-xl bg-red text-white hover:bg-black hover:bg-opacity-50 border-white border-2 transition duration-300 w-full font-semibold;
+    }
+
+    button.back {
+        @apply text-red text-sm font-semibold;
+    }
+
+  }
+
+  @layer utilities {
+    .outerPadding {
+        @apply md:px-8 px-4 py-4
+    }
+  }
+
+  nav li {
+    @apply text-white ;
+  }
