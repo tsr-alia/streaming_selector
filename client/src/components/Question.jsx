@@ -101,7 +101,7 @@ const Question = ({ name, question, options, type, nextQuestion, backQuestion, p
         {isAnswered && (
           <button
             onClick={handleSubmit}
-            className={isLastQuestion ? 'last' : 'next'}
+            className={isLastQuestion || isQuizPreview ? 'last' : 'next'}
           >
             {isLastQuestion ? "Find my Movie" : isQuizPreview ? "Start the Quiz" : "Next"}
           </button>

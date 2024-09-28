@@ -43,7 +43,7 @@ const Home = () => {
             nextQuestion={handleAnswerChange}
             isFirstQuestion={true}
             isLastQuestion={false}
-            isQuizPreview={false}
+            isQuizPreview={true}
           />
         )}
         {/* <button onClick={handleStartQuiz} className="bg-blue-500 text-white py-2 px-4 mt-4">
