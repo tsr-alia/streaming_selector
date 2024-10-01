@@ -13,6 +13,7 @@ router.get('/', async (req, res) => {
 
     const movies = await Movie.find().sort();
     res.json(movies);
+    console.log(movies[0]);
 } catch (error) {
     res.status(500).json({message: error.message});
 }

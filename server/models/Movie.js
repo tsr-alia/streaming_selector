@@ -10,16 +10,56 @@ const movieSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
+        unique: true
+    },
+    id: {
+        type: String,
+        required: true,
+        trim: true,
+        unique: true
+    },
+
+    overview: String,
+    releaseYear: {
+        type: Number,
+        index: true
     },
 
     genres: [{
         id: { type: String, index: true},
         name: String
-    }]
+    }],
 
-}, { collection: 'movies', versionKey: false });
+    directors: [String],
+    cast: [String],
+    rating: Number,
+    imageSet: {
+        horizontalBackdrop: {
+            w600: String
+        }
+    },
+
+    streamingOptions: {
+        de: [{
+            service: {
+                id: {type: String, index: true},
+                name: String,
+                themeColorCode: String
+            },
+            link: String
+        }]
+    },
+    mood: [
+        String
+    ],
+    occasion: [
+        String
+    ],
+    tags: [
+        String
+    ]
+
+}, { collection: 'movies', versionKey: false, timestamps: true });
 
 const Movie = mongoose.model('Movie', movieSchema);
-console.log(movieSchema.path('_id'));
-
 export default Movie;
