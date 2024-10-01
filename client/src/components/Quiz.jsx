@@ -10,9 +10,10 @@ const Quiz = () => {
 
   // Fetch questions from mock API TBD: database?
   useEffect(() => {
-    fetch('http://localhost:3000/questions')
+    fetch('http://localhost:27017/api/questions/')
       .then(response => response.json())
       .then((data) => {
+        console.log(data);
         setQuestions(data);
         // Set initial state based on route params (currentQuestionIndex and firstAnswer)
         if (location.state) {

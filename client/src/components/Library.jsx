@@ -21,9 +21,9 @@ const Library = () => {
 
   return (
     <>
-    <h2 className="text-4xl font-bold mb-6">Movies List</h2>
-        <div className="container mx-auto outerPadding">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <h2>Movies List</h2>
+        <div className="container w-full mx-auto outerPadding">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {movies.map((movie) => (
           <MovieCard key={movie.imdbId} movie={movie} />
         ))}

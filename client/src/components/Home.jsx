@@ -7,8 +7,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("Inside useEffect");
-    fetch("http://localhost:3000/questions")
+    fetch("http://localhost:27017/api/questions/")
       .then((response) => {
         return response.json();
       })
