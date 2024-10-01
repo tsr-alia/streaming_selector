@@ -7,7 +7,6 @@ import questionsRoute from './routes/questions.js'
 
 dotenv.config();
 
-
 const app = express();
 
 // Middelware
@@ -32,7 +31,6 @@ async function connect() {
 connect();
 
 // Routes
-
 app.use('/api/movies', moviesRoute);
 app.use('/api/questions', questionsRoute)
 

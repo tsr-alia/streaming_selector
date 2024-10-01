@@ -1,5 +1,5 @@
 import express from 'express';
-import { getGenres, updateGenreOptions } from '../controllers/movieController.js';
+import { updateGenreOptions } from '../controllers/movieController.js';
 import Question from '../models/Question.js';
 
 const router = express.Router();
@@ -18,6 +18,8 @@ router.get('/', async (req, res) => {
 }
 });
 
-router.get('/update-genres', updateGenreOptions);
+router.get('/update-genres', async(req, res) => {
+    updateGenreOptions();
+});
 
 export default router;

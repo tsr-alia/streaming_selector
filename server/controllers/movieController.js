@@ -4,29 +4,39 @@ import Question from '../models/Question.js';
 export const getGenres = async () => {
     try {
         const genres = await Movie.distinct('genres');
-        return genres;
+        console.log("Unique Genre IDs:", genres);
+        const genresFormatted = [];
+        genres.map((genre) => {
+            let genreFormatted = {
+                value: genre.id,
+                text: genre.name
+            };
+            genresFormatted.push(genreFormatted);
+        })
+        return genresFormatted;
     } catch (error) {
         console.log('An error has occurred fetching genres!', error);
         throw error;
     }
 };
 
-getGenres()
-    .then(ids => {
-        console.log("Unique Genre IDs:", ids);
-    })
-    .catch(error => {
-        console.error("Error fetching genre IDs!", error);
-    });
+// getGenres()
+//     .then(ids => {
+//         console.log("Unique Genre IDs:", ids);
+//     })
+//     .catch(error => {
+//         console.error("Error fetching genre IDs!", error);
+//     });
 
 export const updateGenreOptions = async () => {
     try {
       const genreOptions = await getGenres();
-  
-      // Upsert: Update if exists, else create
+     // Upsert: Update if exists, else create
+            // { options: genreOptions },
       const result = await Question.findOneAndUpdate(
         {name: "genre"}, // Filter: assuming only one summary document exists
-        { options: genreOptions },
+ 
+        { options: genreOptions},
         { upsert: true, new: true, setDefaultsOnInsert: true }
       );
   
