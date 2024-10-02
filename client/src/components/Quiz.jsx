@@ -64,7 +64,7 @@ const Quiz = () => {
 
   const findMovie = async (answers) => {
     try {
-      console.log("here");
+      console.log("findMovie: ", answers);
       const params = answers;
       const res = await axios.get('http://localhost:27017/api/movies/moviepicker', {params});
       console.log(res.data);

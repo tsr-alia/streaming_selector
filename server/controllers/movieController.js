@@ -40,10 +40,59 @@ export const updateGenreOptions = async () => {
         { upsert: true, new: true, setDefaultsOnInsert: true }
       );
   
-      console.log('CategoriesSummary updated:', result);
+      console.log('Genre Options updated:', result);
       return result;
     } catch (error) {
-      console.error('Error updating CategoriesSummary:', error);
+      console.error('Error updating Genre Options:', error);
+    }
+  };
+
+  export const getServices = async () => {
+    try {
+        // const services = await Movie.distinct('streamingOptions.de.service.id');
+        const services = await Movie.aggregate([
+            { $unwind: "$streamingOptions.de"}, // deconstruct the array
+            {
+                $group: {
+                    _id: "$streamingOptions.de.service.id", // Group by service.id
+                    name: { $first: "$streamingOptions.de.service.name" }
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    value: "$_id",
+                    text: "$name"                    
+                }
+            },
+            {
+                $sort: { text: 1 }
+            }
+        ]);
+        console.log("Unique Streaming IDs:", services);
+        return services;
+    } catch (error) {
+        console.log('An error has occurred fetching streaming services!', error);
+        throw error;
+    }
+};
+
+  export const updateStreamingOptions = async () => {
+    try {
+      const streamingOptions = await getServices();
+     // Upsert: Update if exists, else create
+            // { options: genreOptions },
+      const result = await Question.findOneAndUpdate(
+        {name: "service"}, // Filter: assuming only one summary document exists
+ 
+        { options: streamingOptions},
+        { upsert: true, new: true, setDefaultsOnInsert: true }
+      );
+  
+      console.log('Streaming Options updated:', result);
+      return result;
+    } catch (error) {
+      console.error('Error updating Streaming Options:', error);
     }
   };
 
