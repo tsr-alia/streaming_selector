@@ -23,13 +23,13 @@ function App() {
    return (
     <>
     <div 
-      className="min-h-screen bg-cover bg-center relative" 
+      className="min-h-screen bg-fixed bg-cover bg-center relative" 
       style={{ backgroundImage: currentBackground }}
     >
       {/* Overlay div with 75% opacity */}
       <div className="absolute inset-0 bg-black opacity-50 z-0" ></div>
       {/* Menu */}
-      <div className="flex flex-col relative z-10 min-h-screen">
+      <div className="flex flex-col relative min-h-screen">
         <Navbar />
        
         <Routes>

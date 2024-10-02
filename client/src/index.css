@@ -5,6 +5,8 @@
 @tailwind utilities;
 /* create my own utilities */
 
+/* rounded */
+
 @font-face {
     font-family: 'montserrat';
     src: url('/src/assets/fonts/montserrat/Montserrat-SemiBold.ttf') format('truetype');
@@ -27,7 +29,7 @@
     }
 
     h2 {
-        @apply font-loveloline text-red md:text-6xl text-4xl outerPadding relative;
+        @apply font-loveloline text-red md:text-4xl text-4xl outerPadding relative;
         /* color: theme("colors.white"); */
     }
 
@@ -37,6 +39,10 @@
 
     h3 {
         @apply text-lg font-semibold mb-4;
+    }
+
+    h4 {
+      @apply text-lg;
     }
   }
 

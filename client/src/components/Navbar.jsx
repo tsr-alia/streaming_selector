@@ -35,7 +35,7 @@ const Navbar = () => {
                     Profile
                 </li>
                 <li>
-                    <button className="bg-support border-2 border-white rounded-xl px-2 py-1 transition duration-300 hover:bg-red hover:text-white font-semibold">
+                    <button className="bg-support border-2 border-white rounded px-2 py-1 transition duration-300 hover:bg-red hover:text-white font-semibold">
                     <Link to="/quiz">Find My Movie</Link>
                     </button>
                 </li>

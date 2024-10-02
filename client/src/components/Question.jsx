@@ -62,7 +62,7 @@ const Question = ({ name, question, options, type, nextQuestion, backQuestion, f
           <label
             key={index}
             htmlFor={option.value}
-            className={`flex items-center justify-center space-x-2 text-center w-full 
+            className={`flex items-center justify-center space-x-2 text-center cursor-pointer w-full 
               ${selectedAnswer === option.value || selectedAnswer.includes(option.value) ? 'bg-red' : 'bg-black'}
               `
             }
