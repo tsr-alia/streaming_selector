@@ -10,13 +10,17 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   try {
     // filter logic
-    //  const { ... } = req.query;
-    let filter = {};
-    let sort = {};
+    console.log("parameters:", req.query);
+    const { mood, genre, occasion, releaseYear, streamingService, tags } = req.query;
 
-    const movies = await Movie.find().sort();
+    // Build filter object
+    let filter = {};
+    console.log(mood);
+    if (mood) filter.mood = mood;
+    // if (genre) filter.genres = genre
+    console.log(filter);
+    const movies = await Movie.find(filter);
     res.json(movies);
-    console.log(movies[0]);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -24,8 +28,7 @@ router.get("/", async (req, res) => {
 
 router.get("/moviepicker", async (req, res) => {
   // test if query parameters arrive:  res.json(req.query);
-  console.log(typeof req.query.mood);
-  console.log(req.query.mood);
+
   try {
     //  filter movies by streaming (& occasion)
     const movies = await Movie.find({
@@ -34,6 +37,7 @@ router.get("/moviepicker", async (req, res) => {
         //   "occasion": { $in: req.query.occasion}
       }
     }).select({
+      _id: 0,
       title: 1,
       id: 1,
       releaseYear: 1,
@@ -41,71 +45,74 @@ router.get("/moviepicker", async (req, res) => {
       mood: 1,
       occasion: 1,
       tags: 1
-    });
+    }).lean();
+    
+    // console.log(typeof movies);
+    // console.log(Array.isArray(movies));
+    // console.log(Object.entries(movies[0]));
+   
     // Score the remaining movies
-
     const filteredMovies = [];
-    // console.log(movies);
     for (let movie of movies) {
-        movie.score = 0;
+        let score = 0;
 
         // 100 for each match mood, if “neutral”:  50 for other mood
         if (req.query.mood === "neutral") {
-            movie.score += 50;
+          score += 50;
             if (movie.mood.includes(req.query.mood)) {
-                movie.score += 50;
+              score += 50;
             }
         } else if (movie.mood.includes(req.query.mood)) {
-            movie.score += 100;
+          score += 100;
         }
-        console.log("movie mood ", movie.mood, "query mood ", req.query.mood, "score ", movie.score);
+        // console.log("movie mood ", movie.mood, "query mood ", req.query.mood, "score ", score);
 
         // 150: for match occasion: date, children
         // 100 for match occasion: others
         if (movie.occasion.includes(req.query.occasion)) {
             if (req.query.occasion === "children" || req.query.occasion === "date") {
-                movie.score += 150;
+                score += 150;
             } else {
-                movie.score += 100;
+                score += 100;
             }
         }
-        console.log("movie occasion ", movie.occasion, "query occasion ", req.query.occasion, "score ", movie.score);
+        // console.log("movie occasion ", movie.occasion, "query occasion ", req.query.occasion, "score ", score);
 
         // 10 for each genre
         for(let genre of req.query.genre) {
             for(let genreOfMovie of movie.genres) {
                 if (genreOfMovie.id === genre) {
-                    movie.score += 10;
+                    score += 10;
                 }
             }
         }
-        console.log("movie genre ", movie.genres, "query genre ", req.query.genre, "score ", movie.score);
+        // console.log("movie genre ", movie.genres, "query genre ", req.query.genre, "score ", score);
 
         // 50 for each tag
         for(let tag of req.query.tags) {
             if(movie.tags.includes(tag)) {
-                movie.score += 50;
+                score += 50;
             }
         }
-        console.log("movie tag ", movie.tags, "query tag ", req.query.tags, "score ", movie.score);
+        // console.log("movie tag ",  movie.tags, "query tag ", req.query.tags, "score ", score);
+
         let releaseYearMin = new Date().getFullYear() - Number(req.query.releaseYear);
-        console.log(releaseYearMin);
         if (req.query.releaseYear === "noRestriction") {
-            movie.score += 10;
-        } else if (movie.releaseYear >= releaseYearMin ) {
-            movie.score += 20;
+            score += 10;
+        } else if ( movie.releaseYear >= releaseYearMin ) {
+            score += 20;
         }
-        console.log("movie releaseYear ", movie.releaseYear, "query releaseYear ", req.query.releaseYear, "score ", movie.score);
-    
-        if(movie.score > 0) {
-            filteredMovies.push(movie);
+        // console.log("movie releaseYear ",  movie.releaseYear, "query releaseYear ", req.query.releaseYear, "score ", score);
+        	
+        if(score > 0) {
+          movie.score = score;
+          filteredMovies.push(movie);
         }
     }
-
     filteredMovies.sort((a, b) => b.score - a.score);
-    
-
-
+    for(let movie of filteredMovies) {
+      console.log(movie);
+    }
     res.json(filteredMovies);
   } catch (error) {
     res.status(500).json({ message: error.message });

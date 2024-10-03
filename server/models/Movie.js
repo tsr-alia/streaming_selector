@@ -18,18 +18,15 @@ const movieSchema = new mongoose.Schema({
         trim: true,
         unique: true
     },
-
     overview: String,
     releaseYear: {
         type: Number,
         index: true
     },
-
     genres: [{
         id: { type: String, index: true},
         name: String
     }],
-
     directors: [String],
     cast: [String],
     rating: Number,
@@ -38,7 +35,6 @@ const movieSchema = new mongoose.Schema({
             w600: String
         }
     },
-
     streamingOptions: {
         de: [{
             service: {
