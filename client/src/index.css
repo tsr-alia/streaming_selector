@@ -47,7 +47,7 @@
   }
 
   @layer components {
-    h3.moviePicker, form.moviePicker label {
+    h3.moviePicker, form.moviePicker label, .filterDropdown {
         @apply py-4 px-8 bg-opacity-50 text-white border-white border-2 rounded-xl mb-4;
     }
 

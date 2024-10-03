@@ -30,7 +30,7 @@ const Question = ({ name, question, options, type, nextQuestion, backQuestion, f
   }, [selectedAnswer, type]);
 
   const handleInputChange = (e) => {
-    const { value, checked, className } = e.target;
+    const { value, checked } = e.target;
 
     if (type === 'radio') {
       setSelectedAnswer(value); // For radio, directly set the selected value

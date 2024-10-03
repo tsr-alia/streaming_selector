@@ -5,6 +5,7 @@ import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons
 
 const MovieCard = ({ movie }) => {
   // get an array with unique streaming services
+
   const uniqueStreamingOptions = Array.from(new Set(movie.streamingOptions.de.map(option => option.service.id)))
   .map(id => movie.streamingOptions.de.find(option => option.service.id === id));
 

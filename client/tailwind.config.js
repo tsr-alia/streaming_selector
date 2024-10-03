@@ -15,7 +15,7 @@ module.exports = {
       colors: {
         'black': '#0B0B0B',
         'red': '#E74C3C',
-        'white': '#E4E4E4',
+        'white': '#E9E9E9',
         'support': '#34495E'
       },
       fontFamily: {
