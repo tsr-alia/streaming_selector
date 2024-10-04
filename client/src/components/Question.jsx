@@ -29,9 +29,9 @@ const Question = ({ name, question, options, type, nextQuestion, backQuestion, f
     }
   }, [selectedAnswer, type]);
 
+  // sets the selected answer as soon as there is a change in input
   const handleInputChange = (e) => {
     const { value, checked } = e.target;
-
     if (type === 'radio') {
       setSelectedAnswer(value); // For radio, directly set the selected value
     } else if (type === 'checkbox') {
@@ -46,6 +46,7 @@ const Question = ({ name, question, options, type, nextQuestion, backQuestion, f
     }
   };
 
+  // sends the selected answers to the Quiz component and goes to the next question
   const handleSubmit = () => {
     nextQuestion(selectedAnswer);  // Pass the current selectedAnswer to nextQuestion
   };
