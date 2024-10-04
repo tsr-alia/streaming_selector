@@ -1,6 +1,7 @@
 const FilterDropdown = ({
   title,
   options,
+  type,
   name,
   isOpen,
   handleOpen,
@@ -17,7 +18,7 @@ const FilterDropdown = ({
 
   const handleInputChange = (e) => {
     const { value, checked } = e.target;
-    onFilterChange(name, value, checked);
+    onFilterChange(name, value, checked, type);
   }
 
   //   setSelectedFilters((prevSelectedFilters) => {

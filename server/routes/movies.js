@@ -11,15 +11,31 @@ router.get("/", async (req, res) => {
   try {
     // filter logic
     console.log("parameters:", req.query);
-    const { mood, genre, occasion, releaseYear, streamingService, tags } = req.query;
-
+    const { mood, genre, occasion, releaseYear, service, tags } = req.query;
     // Build filter object
     let filter = {};
-    console.log(mood);
-    if (mood) filter.mood = mood;
-    // if (genre) filter.genres = genre
-    console.log(filter);
-    const movies = await Movie.find(filter);
+    // TBD: implement switch in filter option UI to filter.mood = { $all: mood } etc. and change to "all are checkboxes" again;
+    if (mood) filter.mood = { $in: mood };
+    if (occasion) filter.occasion = { $in: occasion };
+    if (genre) filter['genres.id'] = { $in: genre };
+    if (service) filter['streamingOptions.de.service.id'] = {$in: service};
+    if (releaseYear && releaseYear !== "noRestriction") {
+      let thisYear = new Date().getFullYear();
+      filter.releaseYear = { $gte: (thisYear - Number(releaseYear))}
+    }
+    if (tags) filter.tags = { $in: tags };
+    console.log("filter:", filter);
+    const movies = await Movie.find(filter).lean();
+    
+    // console.log(movies.length);
+    // for(let movie of movies) {
+    //   console.log(movie.title);
+    //   if (mood) console.log("mood", movie.mood);
+      // if (occasion) console.log("occasion", movie.occasion); 
+      // if (genre) console.log("genre", movie.genres);
+      // if (service) console.log("service", movie.streamingOptions);
+    //   if (tags) console.log("releaseYear", movie.tags);
+    // }
     res.json(movies);
   } catch (error) {
     res.status(500).json({ message: error.message });

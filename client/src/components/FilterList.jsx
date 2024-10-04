@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import FilterDropdown from "./FilterDropdown";
 
-const FilterList = ({handleFiltering}) => {
+const FilterList = ({ handleFiltering }) => {
   const [openDropdown, setOpenDropdown] = useState(null);
   const [selectedFilters, setSelectedFilters] = useState({});
   const [filterDropdowns, setFilterDropdowns] = useState([]);
@@ -11,25 +11,31 @@ const FilterList = ({handleFiltering}) => {
     setOpenDropdown((prev) => (prev === dropdownName ? null : dropdownName));
   };
 
-  const handleFilterChange = (name, value, checked) => {
+  const handleFilterChange = (name, value, checked, type) => {
     setSelectedFilters((prev) => {
-      const updated = { ...prev };
-      if (!updated[name]) {
-        updated[name] = [];
+      const updatedFilters = { ...prev };
+      if (type === "checkbox") {
+        if (!updatedFilters[name]) {
+          updatedFilters[name] = [];
+        }
+
+        if (checked && !updatedFilters[name].includes(value)) {
+          updatedFilters[name].push(value);
+        } else {
+          updatedFilters[name] = updatedFilters[name].filter(
+            (item) => item !== value
+          );
+        }
+      } else if (type === "radio") {
+        updatedFilters[name] = value;
       }
-      if (checked) {
-        updated[name].push(value);
-      } else {
-        updated[name] = updated[name].filter((item) => item !== value);
-      }
-      return updated;
+      return updatedFilters;
     });
   };
 
   useEffect(() => {
     handleFiltering(selectedFilters);
   }, [selectedFilters]);
-  
 
   // Fetching the quesions from the database
   useEffect(() => {
@@ -54,6 +60,7 @@ const FilterList = ({handleFiltering}) => {
             title={filter.title}
             name={filter.name}
             options={filter.options}
+            type={filter.type}
             isOpen={openDropdown === filter.name}
             handleOpen={handleDropdownToggle}
             first={index === 0}
