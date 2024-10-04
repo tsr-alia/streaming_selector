@@ -5,15 +5,17 @@ const FilterDropdown = ({
   name,
   isOpen,
   handleOpen,
+  dropdownRef,
   first,
   last,
   onFilterChange,
   selectedFilters
+
 }) => {
-  
+
 
   const toggleDropdown = () => {
-    handleOpen(name);
+    handleOpen(name, dropdownRef);
   };
 
   const handleInputChange = (e) => {
@@ -21,36 +23,19 @@ const FilterDropdown = ({
     onFilterChange(name, value, checked, type);
   }
 
-  //   setSelectedFilters((prevSelectedFilters) => {
-  //     const updatedFilters = { ...prevSelectedFilters };
-  //     // Check if the key (name) exists in the object, if not, initialize it as an empty array
-  //     if (!updatedFilters[name]) {
-  //       updatedFilters[name] = [];
-  //     }
-  //     if (checked) {
-  //       // Add value to the array for the specific key (name) if checked
-  //       updatedFilters[name] = [...updatedFilters[name], value];
-  //     } else {
-  //       // Remove value from the array if unchecked
-  //       updatedFilters[name] = updatedFilters[name].filter(
-  //         (item) => item !== value
-  //       );
-  //     }
-  //     console.log(updatedFilters);
-  //     return updatedFilters;
-  //   });
-  // };
-
   return (
     <>
-      <div className="relative ">
+      <div 
+        className="relative ">
         <button
           className="p-2 rounded-md w-full text-left filterDropdown"
           onClick={toggleDropdown}
         >
           {title}
         </button>
+        {isOpen && (
         <div
+          ref={dropdownRef}
           className={`absolute top-full ${
             first
               ? "lg:left-0"
@@ -89,7 +74,7 @@ const FilterDropdown = ({
               {option.text}
             </label>
           ))}
-        </div>
+        </div>)}
       </div>
     </>
   );
