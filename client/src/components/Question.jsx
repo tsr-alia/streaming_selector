@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import React, { useState, useEffect } from "react";
 
-const Question = ({ name, question, options, type, nextQuestion, backQuestion, findMovie, previousAnswer, isFirstQuestion, isLastQuestion, isQuizPreview }) => {
+const Question = ({ name, question, options, type, nextQuestion, backQuestion, findMovie, previousAnswer, isFirstQuestion, isLastQuestion, isQuizPreview, isOptional }) => {
   const [selectedAnswer, setSelectedAnswer] = useState(
     type === "checkbox" ? [] : ""
   );
@@ -99,7 +99,7 @@ const Question = ({ name, question, options, type, nextQuestion, backQuestion, f
          </div>
         {/* Next Button */}
         <div className="flex justify-end mt-4">
-        {isAnswered && (
+        {(isAnswered || isOptional) && (
           <button
             onClick={handleSubmit}
             className={isLastQuestion || isQuizPreview ? 'last' : 'next'}

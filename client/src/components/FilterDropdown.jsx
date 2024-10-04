@@ -23,6 +23,7 @@ const FilterDropdown = ({
     onFilterChange(name, value, checked, type);
   }
 
+
   return (
     <>
       <div 
@@ -67,7 +68,11 @@ const FilterDropdown = ({
                 onChange={handleInputChange}
                 name={name}
                 checked={
+                  // selectedFilters[name] && selectedFilters[name] === option.value
                   selectedFilters[name] &&
+                  type === "radio"
+                  ? selectedFilters[name] === option.value : 
+                  selectedFilters[name] &&                 
                   selectedFilters[name].includes(option.value)
                 }
               />

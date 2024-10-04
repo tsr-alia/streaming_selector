@@ -93,6 +93,7 @@ const Quiz = () => {
           previousAnswer={answers[questions[currentQuestionIndex].name]} // Send the previous answer, if available
           isFirstQuestion={currentQuestionIndex === 0} // Disable back on first question
           isLastQuestion={currentQuestionIndex === questions.length-1}
+          isOptional={questions[currentQuestionIndex].optional}
         />
       )}
     </div>
