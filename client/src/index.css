@@ -29,7 +29,7 @@
     }
 
     h2 {
-        @apply font-loveloline text-red md:text-4xl text-4xl outerPadding relative;
+        @apply font-loveloline text-red md:text-2xl text-4xl relative;
         /* color: theme("colors.white"); */
     }
 
@@ -43,6 +43,10 @@
 
     h4 {
       @apply text-lg;
+    }
+
+    p {
+      @apply text-black;
     }
   }
 
@@ -72,6 +76,26 @@
   @layer utilities {
     .outerPadding {
         @apply md:px-8 px-4 py-4
+    }
+
+    .level-0 {
+      z-index: 0;
+    }
+
+    .level-1 {
+      z-index: 10;
+    }
+
+    .level-2 {
+      z-index: 20;
+    }
+
+    .level-3 {
+      z-index: 50;
+    }
+
+    .level-4 {
+      z-index: 100;
     }
   }
 

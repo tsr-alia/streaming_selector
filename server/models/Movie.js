@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 const movieSchema = new mongoose.Schema({
+    _id: mongoose.Schema.Types.ObjectId,  // Keep default ObjectId for _id
     title: {
         type: String,
         required: true,
@@ -16,7 +17,8 @@ const movieSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
-        unique: true
+        unique: true,
+        index: true
     },
     overview: String,
     releaseYear: {

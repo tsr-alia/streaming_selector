@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import React, { useState, useEffect } from "react";
 
-const Question = ({ name, question, options, type, nextQuestion, backQuestion, findMovie, previousAnswer, isFirstQuestion, isLastQuestion, isQuizPreview, isOptional }) => {
+const Question = ({ name, question, options, type, nextQuestion, backQuestion, previousAnswer, isFirstQuestion, isLastQuestion, isQuizPreview, isOptional }) => {
   const [selectedAnswer, setSelectedAnswer] = useState(
     type === "checkbox" ? [] : ""
   );
@@ -54,6 +54,14 @@ const Question = ({ name, question, options, type, nextQuestion, backQuestion, f
   const handleBack = () => {
     backQuestion(selectedAnswer);
   }
+
+  // trying to debug 5 / 25 error
+  // useEffect(() => {
+  //   console.log(selectedAnswer);
+  //   console.log(selectedAnswer === "5");
+  //   console.log(typeof options[1].value);
+  // }, [selectedAnswer]);
+
 
   return (
     <div className="p-2 sm:max-w-lg w-full text-center flex flex-start flex-col outerPadding">

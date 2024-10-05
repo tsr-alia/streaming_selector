@@ -23,6 +23,7 @@ const questionSchema = new mongoose.Schema(
       _id: false
     },
     type: { type: String },
+    optional: Boolean
   },
   { collection: "questions", versionKey: false }
 );

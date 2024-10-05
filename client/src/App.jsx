@@ -27,7 +27,7 @@ function App() {
       style={{ backgroundImage: currentBackground }}
     >
       {/* Overlay div with 75% opacity */}
-      <div className="absolute inset-0 bg-black opacity-75 z-0" ></div>
+      <div className="absolute inset-0 bg-black opacity-75 level-0" ></div>
       {/* Menu */}
       <div className="flex flex-col relative min-h-screen">
         <Navbar />

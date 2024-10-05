@@ -28,7 +28,7 @@ const MovieCard = ({ movie }) => {
         alt={`${movie.title} poster`}
       />
       <section className="px-6 py-4 flex flex-col flex-grow min-h-80">
-        <h3 className="">{movie.title}</h3>
+        <h3>{movie.title}</h3>
         <p className="flex-grow">{movie.overview}</p>
       </section>
       <section className="min-h-52 flex flex-col">

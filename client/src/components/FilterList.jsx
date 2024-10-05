@@ -72,7 +72,7 @@ const FilterList = ({ handleFiltering }) => {
   return (
     <>
       <h3 className="text-white">Filters</h3>
-      <div className="flex flex-row gap-x-4 gap-y-0 lg:justify-between pb-4 flex-wrap"
+      <div className="flex flex-row gap-x-4 gap-y-0 w-[85%] lg:w-100 lg:justify-between pb-4 flex-wrap"
       ref={containerRef}>
         {filterDropdowns.map((filter, index) => (
           <FilterDropdown
