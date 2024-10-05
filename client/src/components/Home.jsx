@@ -26,8 +26,8 @@ const Home = () => {
   };
 
   return (
-    <div className="bg-black bg-opacity-10 flex lg:flex-column home">
-      <div className="lg:w-1/2 bg-support bg-opacity-75 outerPadding">
+    <div className="bg-black bg-opacity-10 flex flex-row flex-wrap md:flex-nowrap lg:flex-column home">
+      <div className="md:w-1/2 w-full bg-support bg-opacity-75 outerPadding">
         <h1>Not sure what movie to stream tonight?</h1>
         <h2>No need to scroll endlessly, let’s find out!</h2>
         <p>
@@ -38,9 +38,9 @@ const Home = () => {
         </p>
 
       </div>
-      <div className="lg:w-1/2 outerPadding bg-red bg-opacity-50">
+      <div className="md:w-1/2 w-full outerPadding bg-red bg-opacity-50">
         
-        <div>
+        <div className="w-full mx-auto">
           {questions.length > 0 && (
             <Question
               key={0}
