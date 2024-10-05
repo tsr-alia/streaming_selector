@@ -13,7 +13,7 @@ function App() {
   // Define background images for different routes
   const backgrounds = {
     '/': 'url(/images/curtains.png)', // Home background
-    '/movie_library': 'url(/images/moviecollection.jpg)', // Library background
+    '/movie_library': 'url(/images/moviecollection2.jpg)', // Library background
     '/quiz': 'url(/images/movies.jpg)', // Quiz background
     // Add more routes as needed
   };
@@ -37,6 +37,8 @@ function App() {
           <Route path="/movie_library" element={<Library />}></Route>
           <Route path="/quiz" element={<Quiz />}></Route>
           {/* <Route path="/quiz/:id" element={<Quiz />}></Route> */}
+          {/* Profile / Login */}
+          {/*  About */}
         </Routes>
         
      </div>

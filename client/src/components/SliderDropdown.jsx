@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 const SliderDropdown = ({ title, min, max, step }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,18 +22,20 @@ const SliderDropdown = ({ title, min, max, step }) => {
     setRange((prev) => ({ ...prev, maxValue: value }));
   };
 
-
   return (
     <div className="relative z-10">
-       <button
+      <button
         className="p-2 rounded-md w-full text-left filterDropdown"
-        onClick={() => {setRange(!range); toggleDropdown()}}
+        onClick={() => {
+          setRange(!range);
+          toggleDropdown();
+        }}
       >
         {title}
       </button>
       <div
         className={`absolute top-full right-0 md:min-w-[300px] min-w-full bg-black bg-opacity-95 filterDropdown p-2 mt-2 transition-all duration-300 ease-in-out transform ${
-          isOpen ? 'opacity-100' : ' opacity-0'
+          isOpen ? "opacity-100" : " opacity-0"
         } `}
         style={{ zIndex: 100 }}
       >
@@ -41,8 +43,7 @@ const SliderDropdown = ({ title, min, max, step }) => {
           {/* Slider track */}
           <span>Min: {range.minValue}</span>
           <div className="relative w-full h-2 bg-white rounded-full m-1">
-          
-          <div
+            <div
               className="absolute h-2 bg-support rounded-full"
               style={{
                 left: `${((range.minValue - min) / (max - min)) * 100}%`,
@@ -52,7 +53,7 @@ const SliderDropdown = ({ title, min, max, step }) => {
           </div>
           <span>Max: {range.maxValue}</span>
           {/* Min slider */}
-          
+
           <input
             type="range"
             min={min}
@@ -62,7 +63,7 @@ const SliderDropdown = ({ title, min, max, step }) => {
             onChange={handleMinChange}
             className="absolute w-full h-2 appearance-none bg-transparent pointer-events-none  bg-support"
             style={{
-              pointerEvents: 'auto',
+              pointerEvents: "auto",
               zIndex: range.minValue > max - 10 ? 2 : 1,
             }}
           />
@@ -77,18 +78,14 @@ const SliderDropdown = ({ title, min, max, step }) => {
             onChange={handleMaxChange}
             className="absolute w-full h-2 appearance-none bg-transparent pointer-events-none  text-support"
             style={{
-              pointerEvents: 'auto',
+              pointerEvents: "auto",
               zIndex: range.maxValue < min + 10 ? 2 : 1,
             }}
           />
         </div>
 
         {/* Display the selected min and max values */}
-        <div className="flex justify-between mt-4">
-         
-          
-        </div>
-      
+        <div className="flex justify-between mt-4"></div>
       </div>
     </div>
   );

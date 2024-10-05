@@ -17,16 +17,21 @@ const FilterList = ({ handleFiltering }) => {
   useEffect(() => {
     const handleClickOutside = (event) => {
       // If there is an open dropdown and the click is outside of it, close it
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target) && containerRef.current && !containerRef.current.contains(event.target)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target) &&
+        containerRef.current &&
+        !containerRef.current.contains(event.target)
+      ) {
         setOpenDropdown(null);
       }
     };
     // Listen for clicks outside
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
 
     // Cleanup event listener on component unmount
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -72,8 +77,10 @@ const FilterList = ({ handleFiltering }) => {
   return (
     <>
       <h3 className="text-white">Filters</h3>
-      <div className="flex flex-row gap-x-4 gap-y-0 w-[85%] lg:w-100 lg:justify-between pb-4 flex-wrap"
-      ref={containerRef}>
+      <div
+        className="flex flex-row gap-x-4 gap-y-0 w-[85%] lg:w-100 lg:justify-between pb-4 flex-wrap"
+        ref={containerRef}
+      >
         {filterDropdowns.map((filter, index) => (
           <FilterDropdown
             key={index}

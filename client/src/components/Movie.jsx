@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faChevronRight, faRotateLeft, faArrowRight, faCheck } from '@fortawesome/free-solid-svg-icons';
-
+import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faChevronLeft,
+  faChevronRight,
+  faRotateLeft,
+  faArrowRight,
+  faCheck,
+} from "@fortawesome/free-solid-svg-icons";
 
 const capitalizeFirstLetter = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
-const Movie = ({ movie, userInput, restart, newResult}) => {
+const Movie = ({ movie, userInput, restart, newResult }) => {
   // ?? do I need state for that?
   const [moodTags, setMoodTags] = useState([]);
   const [occasionTags, setOccasionTags] = useState([]);
@@ -74,10 +79,14 @@ const Movie = ({ movie, userInput, restart, newResult}) => {
     setAdditionalTags(newTags);
     newTags = [];
 
-    let releaseYearMin = new Date().getFullYear() - Number(userInput.releaseYear);
-      if (movie.releaseYear !== "noRestriction" && movie.releaseYear >= releaseYearMin) {
-       setYearOverlap(true); 
-      }
+    let releaseYearMin =
+      new Date().getFullYear() - Number(userInput.releaseYear);
+    if (
+      movie.releaseYear !== "noRestriction" &&
+      movie.releaseYear >= releaseYearMin
+    ) {
+      setYearOverlap(true);
+    }
   }, [movie, userInput]);
 
   //   console.log(newTags);
@@ -104,14 +113,13 @@ const Movie = ({ movie, userInput, restart, newResult}) => {
     );
   };
 
-
   return (
     <>
       <div className="relative inset-0 level-3 w-full h-full bg-black bg-opacity-75 outerPadding">
         <h2 className="font-montserrat text-xl font-semibold mb-4">
           We found a Movie for you!
         </h2>
-    
+
         <div className="relative w-full min-h-screen flex rounded overflow-hidden shadow-lg bg-white flex-col sm:flex-row">
           {/* Sidebar with Vertical Image and Streaming Links*/}
           <div className="sm:w-1/3">
@@ -121,7 +129,9 @@ const Movie = ({ movie, userInput, restart, newResult}) => {
               className="w-full "
             />
             {/* Streaming Links (tbd: make into component) */}
-            <h4 className="px-6 pt-4 font-semibold text-center">Watch now on</h4>
+            <h4 className="px-6 pt-4 font-semibold text-center">
+              Watch now on
+            </h4>
             <div className="relative flex items-center px-2 min-h-24">
               {uniqueStreamingOptions.length > 1 && (
                 <button
@@ -164,9 +174,13 @@ const Movie = ({ movie, userInput, restart, newResult}) => {
           {/* Information Section */}
           <div className="sm:w-2/3 w-full p-6 flex flex-col">
             <h3 className="mb-0">{movie.title}</h3>
-            <p className={`mb-4 ${yearOverlap ? 'text-red' : 'text-black'}`}>{movie.releaseYear}{yearOverlap && <FontAwesomeIcon className="ml-2" icon={faCheck} />}</p>
+            <p className={`mb-4 ${yearOverlap ? "text-red" : "text-black"}`}>
+              {movie.releaseYear}
+              {yearOverlap && (
+                <FontAwesomeIcon className="ml-2" icon={faCheck} />
+              )}
+            </p>
             <p className="mb-4">{movie.overview}</p>
-
 
             {/* Tags */}
             <section className="mb-4">
@@ -182,7 +196,9 @@ const Movie = ({ movie, userInput, restart, newResult}) => {
                     } `}
                   >
                     {tag.title}
-                    {tag.overlap && <FontAwesomeIcon className="ml-2" icon={faCheck} />}
+                    {tag.overlap && (
+                      <FontAwesomeIcon className="ml-2" icon={faCheck} />
+                    )}
                   </li>
                 ))}
               </ul>
@@ -198,13 +214,15 @@ const Movie = ({ movie, userInput, restart, newResult}) => {
                       } `}
                     >
                       {tag.title}
-                      {tag.overlap && <FontAwesomeIcon className="ml-2" icon={faCheck} />}
+                      {tag.overlap && (
+                        <FontAwesomeIcon className="ml-2" icon={faCheck} />
+                      )}
                     </li>
                   ))}
                 </ul>
-            )}
-             </section>
-             {/* Mood and Occasion */}
+              )}
+            </section>
+            {/* Mood and Occasion */}
             <section className="mb-4">
               {/* <h4 className="mb-2">Watch this movie when you are feeling</h4> */}
               <ul className="flex flex-wrap gap-2">
@@ -218,7 +236,9 @@ const Movie = ({ movie, userInput, restart, newResult}) => {
                     } `}
                   >
                     {tag.title}
-                    {tag.overlap && <FontAwesomeIcon className="ml-2" icon={faCheck} />}
+                    {tag.overlap && (
+                      <FontAwesomeIcon className="ml-2" icon={faCheck} />
+                    )}
                   </li>
                 ))}
               </ul>
@@ -237,24 +257,32 @@ const Movie = ({ movie, userInput, restart, newResult}) => {
                     } `}
                   >
                     {tag.title}
-                    {tag.overlap && <FontAwesomeIcon className="ml-2" icon={faCheck} />}
+                    {tag.overlap && (
+                      <FontAwesomeIcon className="ml-2" icon={faCheck} />
+                    )}
                   </li>
                 ))}
               </ul>
             </section>
             {/* Buttons */}
             <section className="flex flex-wrap">
-              <button onClick={newResult} className="px-4 py-2 rounded-xl bg-red text-white hover:bg-black hover:bg-opacity-50 border-white border-2 transition duration-300">
-              Get another suggestion!<FontAwesomeIcon className="ml-2" icon={faArrowRight} />
+              <button
+                onClick={newResult}
+                className="px-4 py-2 rounded-xl bg-red text-white hover:bg-black hover:bg-opacity-50 border-white border-2 transition duration-300"
+              >
+                Get another suggestion!
+                <FontAwesomeIcon className="ml-2" icon={faArrowRight} />
               </button>
-              <button onClick={restart} className="px-4 py-2 rounded-xl bg-support text-white hover:bg-black hover:bg-opacity-50 border-white border-2 transition duration-300 font-semibold">
-              Restart the Quiz!<FontAwesomeIcon className="ml-2" icon={faRotateLeft} />
+              <button
+                onClick={restart}
+                className="px-4 py-2 rounded-xl bg-support text-white hover:bg-black hover:bg-opacity-50 border-white border-2 transition duration-300 font-semibold"
+              >
+                Restart the Quiz!
+                <FontAwesomeIcon className="ml-2" icon={faRotateLeft} />
               </button>
             </section>
           </div>
-   
         </div>
-        
       </div>
     </>
   );

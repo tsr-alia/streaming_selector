@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Question from "./Question"; // Assuming Question is in the components folder
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowDown, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowDown, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 const Home = () => {
   const [questions, setQuestions] = useState([]);
@@ -34,12 +34,9 @@ const Home = () => {
           Take our interactive quiz to discover the perfect film for your mood
           and genre preferences.
         </p>
-        <p>Start by telling us something about your mood today! 
-        </p>
-
+        <p>Start by telling us something about your mood today!</p>
       </div>
       <div className="md:w-1/2 w-full outerPadding bg-red bg-opacity-50">
-        
         <div className="w-full mx-auto">
           {questions.length > 0 && (
             <Question

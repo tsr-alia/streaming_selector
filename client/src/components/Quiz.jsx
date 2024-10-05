@@ -172,20 +172,21 @@ const Quiz = () => {
 
         {loadingInitial && (
           <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-75 text-white level-3">
-          <p className="text-white">Loading results...</p>
-        </div>)}
+            <p className="text-white">Loading results...</p>
+          </div>
+        )}
         {error && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-75 text-white level-3">
-          <p className="text-red">{error}</p>
-        </div>
-      )}
+          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-75 text-white level-3">
+            <p className="text-red">{error}</p>
+          </div>
+        )}
 
         {currentResult && (
           <>
             {loadingDetail ? (
               <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-75 text-white level-3">
-              <p className="text-white">Loading data...</p>
-            </div>
+                <p className="text-white">Loading data...</p>
+              </div>
             ) : (
               <Movie
                 movie={currentResult}
