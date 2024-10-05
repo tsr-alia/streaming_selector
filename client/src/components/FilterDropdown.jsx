@@ -29,7 +29,7 @@ const FilterDropdown = ({
       <div 
         className="relative ">
         <button
-          className="p-2 rounded-md w-full text-left filterDropdown"
+          className={`p-2 rounded-md w-full text-left filterDropdown ${selectedFilters[name] && selectedFilters[name].length !== 0 ? "border-red" : ""}`}
           onClick={toggleDropdown}
         >
           {title}
