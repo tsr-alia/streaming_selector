@@ -27,7 +27,7 @@ const Library = () => {
 
   return (
     <>
-    <h2>Movies List</h2>
+    <h2 className="outerPadding">Movies List</h2>
         <div className="outerPadding min-h-screen">
         <FilterList handleFiltering={updateFilters}/>
         {movies.length === 0 ? (

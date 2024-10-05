@@ -28,9 +28,20 @@
         /* color: theme("colors.white"); */
     }
 
+    .home h1 {
+      @apply font-montserrat font-semibold mb-8 text-4xl;
+    }
+
+    .home p {
+      @apply text-white mb-4;
+    }
     h2 {
         @apply font-loveloline text-red md:text-2xl text-4xl relative;
         /* color: theme("colors.white"); */
+    }
+
+    .home h2 {
+      @apply font-montserrat font-semibold mb-4;
     }
 
     h3, ul, li, a, p, input, button, span {
