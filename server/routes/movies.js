@@ -1,9 +1,5 @@
 import mongoose from "mongoose";
 import express from "express";
-import {
-  getGenres,
-  updateGenreOptions,
-} from "../controllers/movieController.js";
 import Movie from "../models/Movie.js";
 
 const router = express.Router();
@@ -12,7 +8,7 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   try {
     // filter logic
-    console.log("parameters:", req.query);
+    // console.log("parameters:", req.query);
     const { mood, genre, occasion, releaseYear, service, tags } = req.query;
     // Build filter object
     let filter = {};
@@ -26,24 +22,14 @@ router.get("/", async (req, res) => {
       filter.releaseYear = { $gte: thisYear - Number(releaseYear) };
     }
     if (tags) filter.tags = { $in: tags };
-    console.log("filter:", filter);
     const movies = await Movie.find(filter).lean();
-
-    // console.log(movies.length);
-    // for(let movie of movies) {
-    //   console.log(movie.title);
-    //   if (mood) console.log("mood", movie.mood);
-    // if (occasion) console.log("occasion", movie.occasion);
-    // if (genre) console.log("genre", movie.genres);
-    // if (service) console.log("service", movie.streamingOptions);
-    //   if (tags) console.log("releaseYear", movie.tags);
-    // }
     res.json(movies);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
+// "Find My Movie"
 router.get("/moviepicker", async (req, res) => {
   // test if query parameters arrive:  res.json(req.query);
 
@@ -73,7 +59,7 @@ router.get("/moviepicker", async (req, res) => {
     // console.log(Array.isArray(movies));
     // console.log(Object.entries(movies[0]));
 
-    // Score the remaining movies
+    // Rank the remaining movies
     const filteredMovies = [];
     for (let movie of movies) {
       let score = 0;
@@ -147,22 +133,15 @@ router.get("/moviepicker", async (req, res) => {
   }
 });
 
+// get all information about a movie by id (using the id given to the data from the Streaming Availability API)
 router.get("/movie/:id", async (req, res) => {
   try {
-    console.log(req.params.id);
-    // const id = req.params.id;
-    // let requestedId = String(req.params.id);
+    // console.log(req.params.id);
     const requestedId = req.params.id;
-    // Check if the ID is a valid ObjectId
-    // if (!mongoose.Types.ObjectId.isValid(requestedId)) {
-    //   return res.status(400).json({ message: "Invalid ID format" });
-    // }
-    // const movie = await Movie.findById({ requestedId }).lean();
     const movie = await Movie.findOne({ id: requestedId }).lean();
     if (!movie) {
       return res.status(404).json({ message: "Movie not found" });
     }
-    console.log(movie);
     res.json(movie);
   } catch (error) {
     res.status(500).json({ message: error.message });

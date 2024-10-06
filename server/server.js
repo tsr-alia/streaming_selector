@@ -39,5 +39,6 @@ app.use((req, res) => {
 res.status(404).json({ message: 'Route Not Found' });
 });
 
+// set port with fallback
 const PORT = process.env.PORT || 27017;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}!`));

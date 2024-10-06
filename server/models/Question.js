@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// sets the Schema for the questions collection where the questions and options for the interactive quiz and filters are stored
 const questionSchema = new mongoose.Schema(
   {
     id: {
@@ -20,10 +21,10 @@ const questionSchema = new mongoose.Schema(
           value: String,
         },
       ],
-      _id: false
+      _id: false,
     },
     type: { type: String },
-    optional: Boolean
+    optional: Boolean,
   },
   { collection: "questions", versionKey: false }
 );

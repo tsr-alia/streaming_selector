@@ -3,17 +3,22 @@ import axios from "axios";
 import FilterDropdown from "./FilterDropdown";
 
 const FilterList = ({ handleFiltering }) => {
+  // states for opening and closing dropdowns
   const [openDropdown, setOpenDropdown] = useState(null);
   const dropdownRef = useRef(null);
   const containerRef = useRef(null);
+  // state for saving filter selection
   const [selectedFilters, setSelectedFilters] = useState({});
+  // state for populating the filters
   const [filterDropdowns, setFilterDropdowns] = useState([]);
 
+  // Toggle open/close for filter menus
   const handleDropdownToggle = (dropdownName, refDropdown) => {
     dropdownRef.current = refDropdown.current;
     setOpenDropdown((prev) => (prev === dropdownName ? null : dropdownName));
   };
 
+  // handle closing for clicking outside of the filters
   useEffect(() => {
     const handleClickOutside = (event) => {
       // If there is an open dropdown and the click is outside of it, close it
@@ -35,6 +40,7 @@ const FilterList = ({ handleFiltering }) => {
     };
   }, []);
 
+  // log change in filter as soon as user clicks on them
   const handleFilterChange = (name, value, checked, type) => {
     setSelectedFilters((prev) => {
       const updatedFilters = { ...prev };
@@ -42,7 +48,6 @@ const FilterList = ({ handleFiltering }) => {
         if (!updatedFilters[name]) {
           updatedFilters[name] = [];
         }
-
         if (checked && !updatedFilters[name].includes(value)) {
           updatedFilters[name].push(value);
         } else {
@@ -57,16 +62,17 @@ const FilterList = ({ handleFiltering }) => {
     });
   };
 
+  // pass selected filters to the function in Library to update filters and trigger fetching movies
   useEffect(() => {
     handleFiltering(selectedFilters);
   }, [selectedFilters]);
 
-  // Fetching the quesions from the database
+  // Fetching the questions from the database and populating the filters
   useEffect(() => {
     const fetchFilters = async () => {
       try {
         const res = await axios.get("http://localhost:27017/api/questions");
-        setFilterDropdowns(res.data); // Assuming your API returns an array of movie objects in `data.movies`
+        setFilterDropdowns(res.data); 
       } catch (error) {
         console.error("Error fetching movies:", error);
       }
@@ -81,6 +87,7 @@ const FilterList = ({ handleFiltering }) => {
         className="flex flex-row gap-x-4 gap-y-0 w-[85%] lg:w-100 lg:justify-between pb-4 flex-wrap"
         ref={containerRef}
       >
+        {/* rendering filters according to fetched data and passing functions */}
         {filterDropdowns.map((filter, index) => (
           <FilterDropdown
             key={index}

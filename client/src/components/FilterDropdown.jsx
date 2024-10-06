@@ -11,10 +11,13 @@ const FilterDropdown = ({
   onFilterChange,
   selectedFilters,
 }) => {
+
+  // calling the toggle open/close function for the current filter
   const toggleDropdown = () => {
     handleOpen(name, dropdownRef);
   };
 
+  // sending input change to function in FilterList
   const handleInputChange = (e) => {
     const { value, checked } = e.target;
     onFilterChange(name, value, checked, type);
@@ -67,7 +70,6 @@ const FilterDropdown = ({
                   onChange={handleInputChange}
                   name={name}
                   checked={
-                    // selectedFilters[name] && selectedFilters[name] === option.value
                     selectedFilters[name] && type === "radio"
                       ? selectedFilters[name] === option.value
                       : selectedFilters[name] &&
