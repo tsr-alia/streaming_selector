@@ -79,7 +79,6 @@ const Quiz = () => {
     setLoadingInitial(true);
     setError(null);
     try {
-      console.log("findMovie: ", answers);
       const params = answers;
       const res = await axios.get(
         "http://localhost:27017/api/movies/moviepicker",
