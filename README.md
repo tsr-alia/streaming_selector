@@ -1,14 +1,57 @@
 # Streaming Selector
 React App that picks out a movie for the user to watch based on their answers to 6 questions. The website is based on https://pickamovieforme.com/ and was built for educational purposes only. The MongoDB database is generated from the Streaming Availability API and tagged with additional information. It currently stores information about almost 90 movies. 
 
-## Usage
+## Getting Started
 
-- Install Node.js and npm
-- Download all files from the repository
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) installed
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/) installed
+- [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) account (optional, see below)
+
+### Installation
+
+1. **Clone the repository:**
+```bash
+   git clone https://github.com/tsr-alia/streaming_selector.git
+   cd streaming-selector
+```
+2. **Set up environment variables:**
+- Server:
+```bash
+   cd server
+   cp .env.example .env
+```
+Update `.env` with your MongoDB Atlas connection string
+
+- Client:
+```bash
+   cd ../client
+   cp .env.example .env
+```
+Update `.env` with your API URL if different from the default.
+
+3. ***Install dependencies:***
+- Go to the root directory
+```bash
+   cd ..
+```
+
+- Install all server and client dependencies from there:
+```bash
+   npm run install-all
+```
+
 - In the client directory, type `npm install` to install dependencies
 - In the server directory, type `npm install` to install dependencies
 - To start the backend, go to the client directory and type `node server.js`.
 - To start the frontend, go to the server directory and type `npm run ...`
+
+## Technologies Used
+
+- Frontend: React, Vite
+- Backend: Node.js, Express
+- Database: MongoDB Atlas
 
 ## Current Features
 
