@@ -7,9 +7,77 @@ React App that picks out a movie for the user to watch based on their answers to
 
 - [Node.js](https://nodejs.org/) installed
 - [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/) installed
-- [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) account (optional, see below)
+- [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) account or MongoDBCompass installed
 
 ### Installation
+
+### Setting Up the MongoDB Database
+
+#### Option 1: Set Up MongoDB in Atlas
+
+MongoDB Atlas is a cloud database service that makes it easy to set up and manage a database without hosting it yourself.
+
+1. **Create an Atlas Account**
+
+- Go to MongoDB Atlas and sign up for a free account.
+- After signing in, follow the steps to create a new cluster (the free tier is enough for testing)
+
+2. **Configure Cluster and Whitelist Your IP**
+
+- Once your cluster is created, go to the Network Access tab and click "Add IP Address."
+- Add your current IP address or choose "Allow Access From Anywhere" (not recommended for production)
+- Go to the Database Access tab and define your username and password
+
+3. **Get the Connection String**
+
+- In your Atlas dashboard, go to the Database tab, click "Connect" and then click on "Drivers"
+- Choose Node.js as the driver, copy the connection string, and replace the <username>, <password>, and <dbname> placeholders
+
+4. **Import Seed Data**
+Once you've set up your MongoDB Atlas account, you can import the seed data (provided as JSON files `streaming_selector.movies.json` and `streaming_selector.questions.json` in the root directory of this repo) into your new database.
+
+- Install the MongoDB tools if they’re not installed:
+
+```bash
+npm install -g MongoDB
+```
+
+- Use mongoimport to import your seed data for both the movies and the questions collection:
+
+```bash
+mongoimport --uri "mongodb+srv://<username>:<password>@cluster.mongodb.net/<dbname>" --collection <collection_name> --file ./data/<collection_name>.json --jsonArray
+``` 
+
+##### Option 2: Set Up MongoDB Locally with MongoDB Compass
+
+If you prefer a local setup, MongoDB Compass is a GUI tool for managing your MongoDB databases.
+
+1. **Download and Install MongoDB Compass**
+- Download MongoDB Compass and install it on your machine
+
+2. **Set Up a Local Database**
+- Once installed, open MongoDB Compass and click "New Connection."
+- For a local MongoDB instance, use the default connection string: `mongodb://localhost:27017/`
+- Click "Connect"
+  
+3. **Create a New Database**
+- In MongoDB Compass, click "Create Database"
+- Provide a name for the database (e.g., moviedb) and a collection name "movies"
+- Set up a second collection called "questions"
+
+4. **Import Seed Data**
+You can import the seed data from the JSON files `streaming_selector.movies.json` and `streaming_selector.questions.json` provided in the root directory of this repo into your new database via the MongoDBCompass GUI.
+- Select the collection you just created.
+- Click on Add Data > Import File and choose the JSON file you want to import.
+- Repeat this process for the "questions" collection.
+
+5. **Add the Connection String to Your .env File**
+If you’re using a local MongoDB instance, use the following connection string in your .env file:
+```bash
+MONGO_URI=mongodb://localhost:27017/moviedb
+```
+
+### Setting Up the React App
 
 1. **Clone the repository:**
 ```bash
@@ -17,35 +85,39 @@ React App that picks out a movie for the user to watch based on their answers to
    cd streaming-selector
 ```
 2. **Set up environment variables:**
-- Server:
+#### Server:
 ```bash
    cd server
    cp .env.example .env
 ```
-Update `.env` with your MongoDB Atlas connection string
+- Update `.env` with your MongoDB Atlas connection string:
 
-- Client:
+```bash
+MONGO_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/<dbname>
+```
+
+#### Client:
 ```bash
    cd ../client
    cp .env.example .env
 ```
-Update `.env` with your API URL if different from the default.
+- Update `.env` with your API URL if different from the default.
 
-3. ***Install dependencies:***
+3. **Install dependencies:**
 - Go to the root directory
-```bash
-   cd ..
-```
-
 - Install all server and client dependencies from there:
 ```bash
    npm run install-all
 ```
+4. **Run the App:**
+- In the root directory, to start the app type:
+```bash
+npm run dev
+```
 
-- In the client directory, type `npm install` to install dependencies
-- In the server directory, type `npm install` to install dependencies
-- To start the backend, go to the client directory and type `node server.js`.
-- To start the frontend, go to the server directory and type `npm run ...`
+5. **Access the App:**
+- Frontend: [http://localhost:3000](http://localhost:5173/)
+- Backend: http://localhost:27017 (as per `.env`)
 
 ## Technologies Used
 
