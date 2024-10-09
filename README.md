@@ -1,5 +1,5 @@
 # Streaming Selector
-React App that picks out a movie for the user to watch based on their answers to 6 questions. The website is based on https://pickamovieforme.com/ and was built for educational purposes only. The MongoDB database is generated from the Streaming Availability API and tagged with additional information. It currently stores information about almost 90 movies. 
+React App that picks out a movie for the user to watch based on their answers to 6 questions. The website is based on [https://pickamovieforme.com/](https://pickamovieforme.com/) and was built for educational purposes only. The MongoDB database is generated from the [Streaming Availability API](https://rapidapi.com/movie-of-the-night-movie-of-the-night-default/api/streaming-availability) and tagged with additional information. It currently stores information about almost 90 movies. 
 
 ## Getting Started
 
