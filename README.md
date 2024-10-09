@@ -116,7 +116,7 @@ npm run dev
 ```
 
 5. **Access the App:**
-- Frontend: [http://localhost:3000](http://localhost:5173/)
+- Frontend: [http://localhost:5173](http://localhost:5173/)
 - Backend: http://localhost:27017 (as per `.env`)
 
 ## Technologies Used
