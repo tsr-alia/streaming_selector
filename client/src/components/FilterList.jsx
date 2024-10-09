@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import FilterDropdown from "./FilterDropdown";
+import { API_URL } from '../config';
 
 const FilterList = ({ handleFiltering }) => {
   // states for opening and closing dropdowns
@@ -71,7 +72,7 @@ const FilterList = ({ handleFiltering }) => {
   useEffect(() => {
     const fetchFilters = async () => {
       try {
-        const res = await axios.get("http://localhost:27017/api/questions");
+        const res = await axios.get(`${API_URL}questions/`);
         setFilterDropdowns(res.data); 
       } catch (error) {
         console.error("Error fetching movies:", error);

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { API_URL } from '../config';
 import Question from "./Question";
 import Movie from "./Movie";
 import axios from "axios";
@@ -24,7 +25,7 @@ const Quiz = () => {
 
   // Fetch questions from database
   useEffect(() => {
-    fetch("http://localhost:27017/api/questions/")
+    fetch(`${API_URL}questions/`)
       .then((response) => response.json())
       .then((data) => {
         setQuestions(data);

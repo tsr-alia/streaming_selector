@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Question from "./Question";
+import { API_URL } from '../config';
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faArrowDown, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
@@ -11,7 +12,7 @@ const Home = () => {
 
   // fetch questions from database to use first question on the homepage
   useEffect(() => {
-    fetch("http://localhost:27017/api/questions/")
+    fetch(`${API_URL}questions/`)
       .then((response) => {
         return response.json();
       })

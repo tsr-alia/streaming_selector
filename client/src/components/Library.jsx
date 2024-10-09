@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import MovieCard from "./MovieCard";
 import axios from "axios";
 import FilterList from "./FilterList";
+import { API_URL } from '../config';
 
 const Library = () => {
   // state for movies to be shown and currently selected filters
@@ -17,7 +18,7 @@ const Library = () => {
     const fetchMovies = async () => {
       try {
         const params = filters;
-        const res = await axios.get("http://localhost:27017/api/movies", {
+        const res = await axios.get(`${API_URL}movies/`, {
           params,
         });
         setMovies(res.data.sort((a, b) => 0.5 - Math.random()));
