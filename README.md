@@ -80,8 +80,17 @@ docker run --name mongo -d -p 27017:27017 mongo
 ```
 This command pulls the MongoDB image and runs it in a container, making MongoDB accessible at `mongodb://localhost:27017/`.
 
-3. **Import Seed Data**
-- With MongoDB running in Docker, you can directly import the seed data from the JSON files `streaming_selector.movies.json` and `streaming_selector.questions.json` provided in the `data` directory of this repo. The database and collections will be automatically created if they don't already exist.
+3. **Copy Seed Data Files into the Container**
+- To import the seed data, you need to copy the JSON files `streaming_selector.movies.json` and `streaming_selector.questions.json` provided in the `data` directory of this repo into the Docker container. You can do this with the following commands:
+
+```bash
+docker cp ./data/streaming_selector.movies.json mongo:/streaming_selector.movies.json
+docker cp ./data/streaming_selector.questions.json mongo:/streaming_selector.questions.json
+```
+This copies the files from your local `data` folder into the running MongoDB container.
+
+4. **Import Seed Data**
+- Now that the seed data is in the container, you can import it into MongoDB. The database and collections will be automatically created if they don't already exist.
 - You can use the `mongoimport` command inside the Docker container to import the seed data into the database:
 ```bash
 docker exec -i mongo mongoimport --db <dbname> --collection movies --file /path/to/streaming_selector.movies.json --jsonArray
