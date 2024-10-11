@@ -17,7 +17,7 @@ jobs:
         options: >-
           --health-cmd="mongosh --eval 'db.adminCommand(\"ping\")'"
           --health-interval=10s
-          --health-timeout=5s"
+          --health-timeout=5s
           --health-retries=5
 
     env:
@@ -76,7 +76,13 @@ jobs:
       - name: Run Tests
         run: npm test
 
-      # 11. (Optional) Check Docker container logs on failure
+      # 11. (Optional) Check MongoDB Logs on Failure
       - name: Check MongoDB Logs on Failure
         if: failure()
-        run: docker logs $(docker ps -q --filter "ancestor=mongo:6.0")
+        run: |
+          CONTAINER_ID=$(docker ps -q --filter "ancestor=mongo:6.0")
+          if [ -n "$CONTAINER_ID" ]; then
+            docker logs "$CONTAINER_ID"
+          else
+            echo "No MongoDB container found to fetch logs."
+          fi
