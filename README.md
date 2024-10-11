@@ -7,7 +7,10 @@ React App that picks out a movie for the user to watch based on their answers to
 
 - [Node.js](https://nodejs.org/) installed
 - [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/) installed
-- [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) account, [MongoDBCompass](https://www.mongodb.com/products/tools/compass) installed or [Docker](https://www.docker.com/) installed
+- **MongoDB Setup Options**:
+  - [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) account
+  - [MongoDBCompass](https://www.mongodb.com/products/tools/compass) installed
+  - [Docker](https://www.docker.com/) installed
 
 ### Installation
 
@@ -18,53 +21,48 @@ React App that picks out a movie for the user to watch based on their answers to
 MongoDB Atlas is a cloud database service that makes it easy to set up and manage a database without hosting it yourself.
 
 1. **Create an Atlas Account**
-- Go to MongoDB Atlas and sign up for a free account.
+- Go to [MongoDB Atlas](https://www.mongodb.com/products/platform/atlas-database) and sign up for a free account.
 - After signing in, follow the steps to create a new cluster (the free tier is enough for testing).
 
 2. **Configure Cluster and Whitelist Your IP**
 - Once your cluster is created, go to the **Network Access** tab and click "Add IP Address".
-- Add your current IP address.
+- Click on "Add your current IP Address" to whitelist your current IP.
 - Go to the **Database Access** tab and create a new database user with a username and password that you'll use to connect to the database.
 
 3. **Import Seed Data**
 - Once you've set up your MongoDB Atlas account, you can import the seed data (provided as JSON files `streaming_selector.movies.json` and `streaming_selector.questions.json` in the `data` directory of this repo) into your new database.
 
-- Install the MongoDB tools if they’re not installed:
+- Download and install the MongoDB Database Tools appropriate for your OS.
+- Use `mongoimport` to Import Seed Data for both the movies and the questions collection:
 
 ```bash
-npm install -g MongoDB
-```
-
-- Use mongoimport to import your seed data for both the movies and the questions collection:
-
-```bash
-mongoimport --uri "mongodb+srv://<username>:<password>@cluster.mongodb.net/<dbname>" --collection <collection_name> --file ./data/<collection_name>.json --jsonArray
+mongoimport --uri "mongodb+srv://<username>:<password>@cluster.mongodb.net/<dbname>" --collection movies --file ./data/streaming_selector.movies.json --jsonArray
+mongoimport --uri "mongodb+srv://<username>:<password>@cluster.mongodb.net/<dbname>" --collection questions --file ./data/streaming_selector.questions.json --jsonArray
 ``` 
 - Make sure to replace `<username>`, `<password>`, and `<dbname>` with the correct values. Atlas doesn't automatically create a database when the cluster is set up. You can define your database name yourself. For example, you could name it `streaming_selector`.
-- Make sure you replace <collection_name> with the collection you are importing (`movies`and `questions`respectively).
 
 ##### Option 2: Set Up MongoDB Locally with MongoDB Compass
 
 If you prefer a local setup, MongoDB Compass is a GUI tool for managing your MongoDB databases.
 
 1. **Download and Install MongoDB Compass**
-- Download MongoDB Compass and install it on your machine.
+- Download [MongoDB Compass](https://www.mongodb.com/products/tools/compass) and install it on your machine.
 
 2. **Set Up a Local Database**
 - Once installed, open MongoDB Compass and click "New Connection".
 - For a local MongoDB instance, use the default connection string: `mongodb://localhost:27017/`
 - Click "Connect".
   
-3. **Create a New Database**
+3. **Create a New Database and Collections**
 - In MongoDB Compass, click "Create Database".
-- Provide a name for the database (e.g., `streaming_selector`) and a collection name "movies".
-- Set up a second collection called "questions".
+- Provide a name for the database (e.g., `streaming_selector`) and a collection name `movies`.
+- Set up a second collection called `questions`.
 
 4. **Import Seed Data**
 - You can import the seed data from the JSON files `streaming_selector.movies.json` and `streaming_selector.questions.json` provided in the `data` directory of this repo into your new database via the MongoDBCompass GUI.
-- Select the collection "movies" you have just created.
-- Click on Add Data > Import File and choose the JSON file `streaming_selector.movies.json` to import.
-- Repeat this process for `streaming_selector.questions.json` JSON file and import it in the "questions" collection.
+- Select the collection `movies` you have just created.
+- Click on Add Data > Import File and choose the JSON file `./data/streaming_selector.movies.json` to import.
+- Repeat this process for `./data/streaming_selector.questions.json` JSON file and import it in the `questions` collection.
 
 ##### Option 3: Use Docker to set up the Database
 Docker allows you to set up MongoDB locally in a containerized environment without installing MongoDB directly on your machine.
@@ -93,10 +91,9 @@ This copies the files from your local `data` folder into the running MongoDB con
 - Now that the seed data is in the container, you can import it into MongoDB. The database and collections will be automatically created if they don't already exist.
 - You can use the `mongoimport` command inside the Docker container to import the seed data into the database:
 ```bash
-docker exec -i mongo mongoimport --db <dbname> --collection movies --file /path/to/streaming_selector.movies.json --jsonArray
-docker exec -i mongo mongoimport --db <dbname> --collection questions --file /path/to/streaming_selector.questions.json --jsonArray
+docker exec -i mongo mongoimport --db <dabname> --collection movies --file /streaming_selector.movies.json --jsonArray
+docker exec -i mongo mongoimport --db <dabname> --collection questions --file /streaming_selector.questions.json --jsonArray
 ```
-- Replace `/path/to/` with the correct path to the JSON files on your machine. These files should be in the `data` directory of the project.
 - Replace `<dbname>` with a database name of your choosing (e.g., `streaming_selector`).
 
 ### Setting Up the React App
@@ -116,17 +113,16 @@ docker exec -i mongo mongoimport --db <dbname> --collection questions --file /pa
    cp .env.example .env
 ```
 - Update `.env` with your MongoDB connection string:
-
-- If you’re using a local MongoDB instance with Docker or MongoDB Compass, use the following connection string in your .env file:
-```bash
-MONGO_URI=mongodb://localhost:27017/<dbname>
-```
-Replace `<dbname>` with the name of the database you defined when uploading the seed data/creating the database.
-
-- If you are using MongoDB Atlas, use the connection string provided in the **Database** tab and replace `<dbname>` with the name of the database you defined when uploading the seed data.
-```bash
-MONGO_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/<dbname>
-```
+  - **For local MongoDB instance (Docker or MongoDB Compass)**:
+  ```bash
+  MONGO_URI=mongodb://localhost:27017/<dbname>
+  ```
+  Replace `<dbname>` with the name of the database you defined when uploading the seed data/creating the database.
+  - **For MongoDB Atlas:**:
+  ```bash
+  MONGO_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/<dbname>
+  ```
+  Replace <username>, <password>, and streaming_selector with your Atlas credentials and database name you defined when uploading the seed data.
 
 #### Client:
 
@@ -136,20 +132,27 @@ MONGO_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/<dbname>
 ```
 
 3. **Install dependencies:**
-- Go to the root directory.
-- Install all server and client dependencies from there:
+- Return to the root and install all dependencies for the root, server, and client:
 ```bash
    npm run install-all
 ```
+This script performs the following:
+
+- Installs root dependencies (including concurrently).
+- Installs server dependencies.
+- Installs client dependencies.
 
 4. **Run the App:**
 - In the root directory, to start the app type:
 ```bash
 npm run dev
 ```
+This command concurrently starts both the client and server. 
+- Client: Runs on http://localhost:5173
+- Server: Runs on http://localhost:3000
 
 5. **Access the App:**
-- Frontend: [http://localhost:5173](http://localhost:5173/)
+- Open your browser and navigate to [http://localhost:5173](http://localhost:5173/) to view the frontend
 - Backend: http://localhost:27017 (as per `.env`)
 
 ## Technologies Used

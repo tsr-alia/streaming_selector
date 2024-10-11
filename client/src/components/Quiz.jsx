@@ -82,7 +82,7 @@ const Quiz = () => {
     try {
       const params = answers;
       const res = await axios.get(
-        "http://localhost:27017/api/movies/moviepicker",
+        `${API_URL}movies/moviepicker`,
         { params }
       );
       // put results in an array and set index to 0
@@ -107,7 +107,7 @@ const Quiz = () => {
     setError(null);
     try {
       const res = await axios.get(
-        `http://localhost:27017/api/movies/movie/${id}`
+        `${API_URL}movies/movie/${id}`
       );
       console.log(res.data);
       setCurrentResult(res.data);
