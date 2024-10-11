@@ -17,7 +17,7 @@ jobs:
         options: >-
           --health-cmd="mongosh --eval 'db.adminCommand(\"ping\")'"
           --health-interval=10s
-          --health-timeout=5s
+          --health-timeout=5s"
           --health-retries=5
 
     env:
@@ -33,7 +33,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20.x'
+          node-version: '20.x'  # Updated to Node.js 20
 
       # 3. Wait for MongoDB to be ready
       - name: Wait for MongoDB
@@ -58,7 +58,7 @@ jobs:
       - name: Create Client .env file
         run: |
           cp client/.env.example client/.env
-          echo "VITE_API_URL=${{ env.REACT_APP_API_URL }}" >> client/.env
+          echo "REACT_APP_API_URL=${{ env.REACT_APP_API_URL }}" >> client/.env
 
       # 7. Seed MongoDB with seed data
       - name: Seed MongoDB
@@ -75,3 +75,8 @@ jobs:
       # 10. (Optional) Run tests if available
       - name: Run Tests
         run: npm test
+
+      # 11. (Optional) Check Docker container logs on failure
+      - name: Check MongoDB Logs on Failure
+        if: failure()
+        run: docker logs $(docker ps -q --filter "ancestor=mongo:6.0")
