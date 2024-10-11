@@ -60,25 +60,33 @@ jobs:
           cp client/.env.example client/.env
           echo "REACT_APP_API_URL=${{ env.REACT_APP_API_URL }}" >> client/.env
 
-      # 7. Seed MongoDB with your seed data
+      # 7. Install MongoDB Database Tools
+      - name: Install MongoDB Database Tools
+        run: |
+          wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
+          echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+          sudo apt-get update
+          sudo apt-get install -y mongodb-database-tools
+
+      # 8. Seed MongoDB with your seed data
       - name: Seed MongoDB
         run: |
-          mongoimport --db streaming_selector_db --collection movies --file data/streaming_selector.movies.json --jsonArray
-          mongoimport --db streaming_selector_db --collection questions --file data/streaming_selector.questions.json --jsonArray
+          mongoimport --uri "${{ env.MONGO_URI }}" --db streaming_selector --collection movies --file data/streaming_selector.movies.json --jsonArray
+          mongoimport --uri "${{ env.MONGO_URI }}" --db streaming_selector --collection questions --file data/streaming_selector.questions.json --jsonArray
 
-      # 8. Start development servers in the background
+      # 9. Start development servers in the background
       - name: Start Development Servers
         run: npm run dev &
 
-      # 9. Wait for servers to start
+      # 10. Wait for servers to start
       - name: Wait for Servers
         run: sleep 15
 
-      # 10. (Optional) Run tests if available
+      # 11. (Optional) Run tests if available
       - name: Run Tests
         run: npm test
 
-      # 11. (Optional) Check MongoDB Logs on Failure
+      # 12. (Optional) Check MongoDB Logs on Failure
       - name: Check MongoDB Logs on Failure
         if: failure()
         run: |
