@@ -11,45 +11,67 @@ jobs:
 
     services:
       mongodb:
-        image: mongo:latest
+        image: mongo:6.0
         ports:
           - 27017:27017
-        options: --bind_ip_all
-        env:
-          MONGO_INITDB_DATABASE: streaming_selector
+        options: >-
+          --health-cmd="mongosh --eval 'db.adminCommand(\"ping\")'"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
     env:
       MONGO_URI: mongodb://localhost:27017/streaming_selector
-      # Add any additional environment variables needed for testing
-      # For example:
-      # REACT_APP_API_URL: http://localhost:5173/api
+      REACT_APP_API_URL: http://localhost:3000/api
 
     steps:
-      # Checkout the repository
+      # 1. Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Set up Node.js environment
+      # 2. Set up Node.js environment
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
 
-      # Install dependencies for both client and server
+      # 3. Wait for MongoDB to be ready
+      - name: Wait for MongoDB
+        run: |
+          for i in {1..30}; do
+            nc -z localhost 27017 && echo "MongoDB is up" && break
+            echo "Waiting for MongoDB..."
+            sleep 1
+          done
+
+      # 4. Install dependencies
       - name: Install dependencies
         run: npm run install-all
 
-      # Create the .env file for the server
-      - name: Create .env file
+      # 5. Create the .env file for the server
+      - name: Create Server .env file
         run: |
           cp server/.env.example server/.env
           echo "MONGO_URI=${{ env.MONGO_URI }}" >> server/.env
 
-      # Seed MongoDB with your seed data
-      - name: Seed MongoDB
+      # 6. Create the .env file for the client (if needed)
+      - name: Create Client .env file
         run: |
-          mongoimport --db streaming_selector --collection movies --file data/streaming_selector.movies.json --jsonArray
-          mongoimport --db streaming_selector --collection questions --file data/streaming_selector.questions.json --jsonArray
+          cp client/.env.example client/.env
+          echo "VITE_API_URL=${{ env.REACT_APP_API_URL }}" >> client/.env
 
-      # Run tests or dev setup
-      - name: Run development setup
-        run: npm run dev
+      # 7. Seed MongoDB with seed data
+      - name: Seed MongoDB
+        run: npm run seed --prefix server
+
+      # 8. Start development servers in the background
+      - name: Start Development Servers
+        run: npm run dev &
+
+      # 9. Wait for servers to start
+      - name: Wait for Servers
+        run: sleep 15
+
+      # 10. (Optional) Run tests if available
+      - name: Run Tests
+        run: npm test
