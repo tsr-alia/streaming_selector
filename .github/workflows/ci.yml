@@ -58,7 +58,7 @@ jobs:
       - name: Create Client .env file
         run: |
           cp client/.env.example client/.env
-          echo "REACT_APP_API_URL=${{ env.REACT_APP_API_URL }}" >> client/.env
+          echo "VITE_API_URL=${{ env.REACT_APP_API_URL }}" >> client/.env
 
       # 7. Install MongoDB Database Tools
       - name: Install MongoDB Database Tools
