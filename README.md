@@ -122,7 +122,7 @@ docker exec -i mongo mongoimport --db <dabname> --collection questions --file /s
   ```bash
   MONGO_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/<dbname>
   ```
-  Replace <username>, <password>, and streaming_selector with your Atlas credentials and database name you defined when uploading the seed data.
+  Replace `<username>`, `<password>`, and `streaming_selector` with your Atlas credentials and database name you defined when uploading the seed data.
 
 #### Client:
 

@@ -20,7 +20,7 @@ module.exports = {
       },
       fontFamily: {
         'montserrat': ['montserrat', 'sans-serif'],
-        'loveloline': ['lovelo-line', 'serif'],
+        'loveloline': ['loveloline', 'serif'],
       },
     },
   },
