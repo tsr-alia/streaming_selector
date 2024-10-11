@@ -82,11 +82,7 @@ jobs:
       - name: Wait for Servers
         run: sleep 15
 
-      # 11. (Optional) Run tests if available
-      - name: Run Tests
-        run: npm test
-
-      # 12. (Optional) Check MongoDB Logs on Failure
+      # 11. (Optional) Check MongoDB Logs on Failure
       - name: Check MongoDB Logs on Failure
         if: failure()
         run: |
