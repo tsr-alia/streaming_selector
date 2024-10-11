@@ -60,9 +60,11 @@ jobs:
           cp client/.env.example client/.env
           echo "REACT_APP_API_URL=${{ env.REACT_APP_API_URL }}" >> client/.env
 
-      # 7. Seed MongoDB with seed data
+      # 7. Seed MongoDB with your seed data
       - name: Seed MongoDB
-        run: npm run seed --prefix server
+        run: |
+          mongoimport --db streaming_selector_db --collection movies --file data/streaming_selector.movies.json --jsonArray
+          mongoimport --db streaming_selector_db --collection questions --file data/streaming_selector.questions.json --jsonArray
 
       # 8. Start development servers in the background
       - name: Start Development Servers
