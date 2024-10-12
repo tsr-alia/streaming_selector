@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Question from "./Question";
-import { API_URL } from '../config';
+import { API_URL } from "../config";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faArrowDown, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
@@ -31,18 +31,19 @@ const Home = () => {
 
   return (
     // content of homepage
-    <div className="bg-black bg-opacity-10 flex flex-row flex-wrap md:flex-nowrap lg:flex-column home">
-      <div className="md:w-1/2 w-full bg-support bg-opacity-75 outerPadding">
-        <h1>Not sure what movie to stream tonight?</h1>
-        <h2>No need to scroll endlessly, let’s find out!</h2>
-        <p>
-          Take our interactive quiz to discover the perfect film for your mood
-          and genre preferences.
-        </p>
-        <p>Start by telling us something about your mood today!</p>
-      </div>
-      <div className="md:w-1/2 w-full outerPadding bg-red bg-opacity-50">
-        <div className="w-full mx-auto">
+    <>
+      <div className="bg-black bg-opacity-10 flex flex-row flex-wrap md:flex-nowrap lg:flex-column home min-h-screen">
+        <div className="md:w-1/2 xl:w-2/3 w-full bg-support bg-opacity-75 outerPadding">
+          <h1>Not sure what movie to stream tonight?</h1>
+          <h2>No need to scroll endlessly, let’s find out!</h2>
+          <p>
+            Take our interactive quiz to discover the perfect film for your mood
+            and genre preferences.
+          </p>
+          <p>Start by telling us something about your mood today!</p>
+        </div>
+        <div className="md:w-1/2 xl:w-1/3 w-full outerPadding bg-red bg-opacity-50">
+        <div className="md:w-5/6 mx-auto">
           {/* render question component for first question */}
           {questions.length > 0 && (
             <Question
@@ -57,9 +58,10 @@ const Home = () => {
               isQuizPreview={true}
             />
           )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

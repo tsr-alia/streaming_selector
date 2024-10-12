@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "./components/Navbar";
-import Home from "./components/Home"; // Import Home from a separate file
+import Home from "./components/Home";
+import About from "./components/About";
 import Quiz from "./components/Quiz";
 import Library from "./components/Library";
 import { Routes, Route, useLocation } from "react-router-dom";
@@ -14,6 +15,7 @@ function App() {
     "/": "url(/images/curtains.png)", // Home background
     "/movie_library": "url(/images/moviecollection2.jpg)", // Library background
     "/quiz": "url(/images/movies.jpg)", // Quiz background
+    "/about": "url(/images/movieprojector.jpg)"
   };
   // Determine the current background based on the route, fallback to a default if none matches
   const currentBackground =
@@ -34,6 +36,7 @@ function App() {
           {/* Routes - <App /> is wrapped in <BrowserRouter> in main.jsx */}
           <Routes>
             <Route path="/" element={<Home />}></Route>
+            <Route path="/about" element={<About />}></Route>
             <Route path="/movie_library" element={<Library />}></Route>
             <Route path="/quiz" element={<Quiz />}></Route>
             {/* <Route path="/quiz/:id" element={<Quiz />}></Route> */}

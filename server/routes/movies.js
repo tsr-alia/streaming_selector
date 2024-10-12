@@ -111,9 +111,7 @@ router.get("/moviepicker", async (req, res) => {
 
       let releaseYearMin =
         new Date().getFullYear() - Number(req.query.releaseYear);
-      if (req.query.releaseYear === "noRestriction") {
-        score += 10;
-      } else if (movie.releaseYear >= releaseYearMin) {
+      if (movie.releaseYear >= releaseYearMin) {
         score += 20;
       }
       // console.log("movie releaseYear ",  movie.releaseYear, "query releaseYear ", req.query.releaseYear, "score ", score);
@@ -148,4 +146,26 @@ router.get("/movie/:id", async (req, res) => {
   }
 });
 
+router.get("/count", async (req, res) => {
+  try {
+    const [movies, genres, services] = await Promise.all([
+      Movie.countDocuments(),
+      Movie.distinct("genres").lean(),
+      Movie.aggregate([
+        { $unwind: "$streamingOptions.de" },
+        {
+          $group: {
+            _id: "$streamingOptions.de.service.id", // Group by service.id
+            name: { $first: "$streamingOptions.de.service.name" },
+          },
+        }
+      ])
+    ]);
+      console.log({ movies: movies, genres: genres.length, services: services.length });
+      console.log(typeof genres.length);
+    res.json({ movies: movies, genres: genres.length, services: services.length });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 export default router;

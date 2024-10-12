@@ -42,7 +42,9 @@ const Navbar = () => {
           isOpen ? "flex" : "hidden md:flex"
         } md:gap-8 gap-12`}
       >
-        <li>About</li>
+        <li>
+          <Link to="/about">About</Link>
+        </li>
         <li>
           <Link to="/movie_library">Movie Library</Link>
         </li>

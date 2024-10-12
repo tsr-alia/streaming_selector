@@ -79,7 +79,7 @@ const Question = ({
   // }, [selectedAnswer]);
 
   return (
-    <div className="p-2 sm:max-w-lg w-full text-center flex flex-start flex-col outerPadding">
+    <div className="p-2 sm:max-w-lg w-full mx-auto text-center flex flex-start flex-col outerPadding">
       <h3 className="moviePicker bg-black">{question}</h3>
       <form className="moviePicker">
         {options.map((option, index) => (
