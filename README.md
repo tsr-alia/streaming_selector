@@ -31,7 +31,6 @@ MongoDB Atlas is a cloud database service that makes it easy to set up and manag
 
 3. **Import Seed Data**
 - Once you've set up your MongoDB Atlas account, you can import the seed data (provided as JSON files `streaming_selector.movies.json` and `streaming_selector.questions.json` in the `data` directory of this repo) into your new database.
-
 - Download and install the MongoDB Database Tools appropriate for your OS.
 - Use `mongoimport` to Import Seed Data for both the movies and the questions collection:
 
@@ -117,12 +116,12 @@ docker exec -i mongo mongoimport --db <dabname> --collection questions --file /s
   ```bash
   MONGO_URI=mongodb://localhost:27017/<dbname>
   ```
-  Replace `<dbname>` with the name of the database you defined when uploading the seed data/creating the database.
+  Replace `<dbname>` with the name of the database you defined when uploading the seed data/creating the database. 
   - **For MongoDB Atlas:**:
   ```bash
   MONGO_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/<dbname>
   ```
-  Replace `<username>`, `<password>`, and `streaming_selector` with your Atlas credentials and database name you defined when uploading the seed data.
+  Replace `<username>`, `<password>`, and `<dbname>` with your Atlas credentials and database name you defined when uploading the seed data.
 
 #### Client:
 
@@ -153,7 +152,7 @@ This command concurrently starts both the client and server.
 
 5. **Access the App:**
 - Open your browser and navigate to [http://localhost:5173](http://localhost:5173/) to view the frontend
-- Backend: http://localhost:27017 (as per `.env`)
+- Backend: http://localhost:3000 (as per `.env`)
 
 ## Technologies Used
 
@@ -173,7 +172,7 @@ This command concurrently starts both the client and server.
   - Preferences about the release year of the movie?
   - Do you have any additional preferences?
 
-The user's answers are matched against the database which currently contains almost 90 movies. Those movies are first filtered by their streaming availability, making sure the user only gets recommendations for movies that they can watch on streaming plattforms available to them. The remaining movies are ranked by how well they match the other user data. An array of results, ordered by relevance is returned. Using the results array, the first best match is fetched from the database.  
+The user's answers are matched against the database which currently contains almost 90 movies. Those movies are first filtered by their streaming availability, making sure the user only gets recommendations for movies that they can watch on streaming plattforms available to them. The remaining movies are ranked by how well they match the other user data. An array of results, ordered by relevance is returned. Using the results array, first the highest ranking match is fetched from the database.  
 On the result page, there is a streaming link to the movie (deep link to the respective streaming plattform), additional information and indicators of which of the user's preferences match the movie. There is an option to show the next recommendation and an option to restart the quiz.
 
 ### Movie Library
@@ -188,6 +187,7 @@ On the result page, there is a streaming link to the movie (deep link to the res
 - Implement more features to handle the quiz (e.g., genre preference matters / doesn't matter).
 - Filter streaming availability by user location.
 - Check for updated streaming availability (via call to Streaming Availability API) right before showing results.
+- Add a 7th optional question that aims at a more random fact about the user and match the answer with the movie descriptions in the dayabase (e.g., What is your dream vacation destination? or: What was your dream job as a child? etc.)
 
 ### Movie Library
 
